@@ -1497,14 +1497,10 @@ ${docsContext}
         </div>
       )}
 
-      {/* Header */}
-      <div style={{background:"linear-gradient(135deg,#1e3a5f 0%,#2d5a8e 100%)",color:"white",padding:"0 16px"}}>
-        <div style={{maxWidth:1200,margin:"0 auto",display:"flex",alignItems:"center",justifyContent:"space-between",height:60}}>
-          <div style={{display:"flex",alignItems:"center",gap:10}}>
-            <span style={{fontSize:24}}>🗂️</span>
-            <div><div style={{fontWeight:700,fontSize:15}}>أرشيف الأطروحة</div><div style={{fontSize:10,opacity:0.75}}>الخليج العربي • الحرب العالمية الثانية 1939-1945 • د. اسعد النعيمي</div></div>
-          </div>
-          <div style={{display:"flex",gap:2,flexWrap:"wrap"}}>
+          <div style={{display:"flex",gap:2,flexWrap:"wrap",alignItems:"center"}}>
+            <select value={aiModel} onChange={e=>{ setAiModel(e.target.value); setSelectedModel(e.target.value); }} title="اختر نموذج الذكاء الاصطناعي" style={{border:"1px solid rgba(255,255,255,0.3)",borderRadius:6,padding:"4px 8px",fontSize:11,background:"rgba(255,255,255,0.15)",color:"white",cursor:"pointer",fontFamily:"inherit",marginLeft:6}}>
+              {AI_MODELS.map(m => <option key={m.id} value={m.id} style={{color:"#1e293b"}}>🤖 {m.label}</option>)}
+            </select>
             {navItems.map(n=>(
               <button key={n.id} onClick={()=>setPage(n.id)} style={{background:page===n.id?"rgba(255,255,255,0.2)":"transparent",border:"none",color:"white",padding:"5px 9px",borderRadius:6,cursor:"pointer",fontSize:12,fontFamily:"inherit",display:"flex",alignItems:"center",gap:3}}>
                 <span>{n.icon}</span><span style={{display:"none"}} className="nav-label">{n.label}</span>
