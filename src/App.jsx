@@ -493,16 +493,10 @@ ${fileText.substring(0, 3000)}
 }`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 1500,
           messages: [{ role: "user", content: prompt }]
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c => c.text || "").join("") || "{}";
       const clean = text.replace(/```json|```/g, "").trim();
       const parsed = JSON.parse(clean);
@@ -562,17 +556,11 @@ ${fileText.substring(0, 3000)}
     if (!libUrlInput.trim()) return;
     setLibUrlLoading(true);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 1500,
           tools: [{ type: "web_search_20250305", name: "web_search" }],
           messages: [{ role: "user", content: `اذهب لهذا الرابط واستخرج بيانات المصدر لأطروحة "الخليج العربي في الحرب العالمية الثانية 1939-1945":\n${libUrlInput}\n\nأجب بـ JSON فقط:\n{"title":"","author":"","year":null,"language":"","sourceType":"","chapterId":1,"chapterName":"","sections":[],"priority":"★★","importantPages":"","summary":"","keywords":[],"whyImportant":"","howToUse":"","fileName":"${libUrlInput}"}` }]
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c => c.text || "").join("") || "{}";
       const parsed = JSON.parse(text.replace(/```json|```/g, "").trim());
       const newSrc = {
@@ -642,11 +630,7 @@ ${fileText.substring(0, 3000)}
     setUrlLoading(true);
     setUrlResult(null);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model:"claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens:1000,
           tools:[{ type:"web_search_20250305", name:"web_search" }],
           messages:[{
@@ -666,9 +650,7 @@ JSON المطلوب (أعده فقط بدون backticks):
 }
 إذا كان الرابط لصفحة QDL أو أرشيف بريطاني، استخرج المعلومات منه.`
           }]
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c=>c.text||"").join("") || "";
       try {
         const clean = text.replace(/```json|```/g,"").trim();
@@ -701,11 +683,7 @@ JSON المطلوب (أعده فقط بدون backticks):
     setTgLoading(true);
     setTgResults([]);
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model:"claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens:1500,
           messages:[{
             role:"user",
@@ -727,9 +705,7 @@ JSON المطلوب (أعده فقط بدون backticks):
   "qdl_suggestions": ["اقتراح QDL 1","اقتراح QDL 2"]
 }`
           }]
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c=>c.text||"").join("") || "";
       try {
         const clean = text.replace(/```json|```/g,"").trim();
@@ -762,11 +738,7 @@ JSON المطلوب (أعده فقط بدون backticks):
     setAiLoading(true);
     setAiResult("");
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model:"claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens:1000,
           messages:[{ role:"user", content:`أنت مساعد بحثي متخصص في "الخليج العربي خلال الحرب العالمية الثانية 1939-1945".
 
@@ -786,9 +758,7 @@ JSON المطلوب (أعده فقط بدون backticks):
 5. كيف تدمجها مع باقي مصادر فصلها
 
 أجب بالعربية بأسلوب أكاديمي مختصر.` }]
-        })
-      });
-      const data = await res.json();
+        });
       setAiResult(data.content?.map(c=>c.text||"").join("") || "لم يُحصل على رد");
     } catch { setAiResult("خطأ في الاتصال"); }
     setAiLoading(false);
@@ -800,20 +770,14 @@ JSON المطلوب (أعده فقط بدون backticks):
     setAiResult("");
     const docsCtx = docs.slice(0,30).map(d=>`[${d.id}] ${d.title} | ${d.archiveRef||""} | ف${d.chapterId}`).join("\n");
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:"POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model:"claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens:1200,
           messages:[{ role:"user", content:`أنت مساعد بحثي لأطروحة "الخليج العربي خلال الحرب العالمية الثانية 1939-1945".
 سؤال الباحث: "${q}"
 الوثائق المتاحة (${docs.length} وثيقة):
 ${docsCtx}
 أجب بتحليل أكاديمي، اذكر أرقام الوثائق الأكثر صلة، واقترح خطوات بحثية. أجب بالعربية.` }]
-        })
-      });
-      const data = await res.json();
+        });
       setAiResult(data.content?.map(c=>c.text||"").join("") || "");
     } catch { setAiResult("خطأ في الاتصال"); }
     setAiLoading(false);
@@ -963,16 +927,10 @@ ${docsContext || "لم يُعثر على مصادر مطابقة"}
 أجب بالعربية الأكاديمية الرصينة.`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 1500,
           messages: [{ role: "user", content: prompt }]
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c => c.text || "").join("") || "لم يُحصل على رد";
       setCardAiResult(text);
     } catch {
@@ -1103,16 +1061,10 @@ ${textToTranslate.substring(0, 4000)}
 }`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 2000,
           messages: [{ role: "user", content: prompt }]
-        })
-      });
-      const data = await res.json();
+        });
       const raw = data.content?.map(c => c.text || "").join("") || "{}";
       const clean = raw.replace(/```json|```/g, "").trim();
       const parsed = JSON.parse(clean);
@@ -1287,17 +1239,11 @@ ${docsContext}
 ابدأ المناقشة بسؤال افتتاحي واحد محدد ومركَّز يتعلق بالفصل المذكور ومصادره. اجعل سؤالك يعكس ملاحظة دقيقة من قراءة المصادر الواردة. أجب دائماً بالعربية الفصحى الأكاديمية.`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body:    JSON.stringify({
-          model:      "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 600,
           system:     systemPrompt,
           messages:   [{ role: "user", content: "ابدأ المناقشة" }]
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c => c.text || "").join("") || "حدث خطأ في بدء الجلسة.";
       setDefenseMessages([{ role: "committee", text, ts: new Date().toLocaleTimeString("ar") }]);
     } catch {
@@ -1327,17 +1273,11 @@ ${docsContext}
     }));
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body:    JSON.stringify({
-          model:      "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 500,
           system:     systemPrompt,
           messages:   apiMessages,
-        })
-      });
-      const data = await res.json();
+        });
       const text = data.content?.map(c => c.text || "").join("") || "حدث خطأ.";
       setDefenseMessages(prev => [...prev, { role: "committee", text, ts: new Date().toLocaleTimeString("ar") }]);
     } catch {
@@ -1406,16 +1346,10 @@ ${docsContext}
 }`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body:    JSON.stringify({
-          model:      "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 1500,
           messages:   [{ role: "user", content: prompt }]
-        })
-      });
-      const data = await res.json();
+        });
       const raw  = data.content?.map(c => c.text || "").join("") || "{}";
       const clean = raw.replace(/```json|```/g, "").trim();
       const parsed = JSON.parse(clean);
@@ -1457,16 +1391,10 @@ ${docsContext}
 }`;
 
     try {
-      const res = await fetch("https://api.anthropic.com/v1/messages", {
-        method:  "POST",
-        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
-        body:    JSON.stringify({
-          model:      "claude-sonnet-4-6",
+      const data = await callLLM({
           max_tokens: 1500,
           messages:   [{ role: "user", content: prompt }]
-        })
-      });
-      const data = await res.json();
+        });
       const raw  = data.content?.map(c => c.text || "").join("") || "{}";
       const clean = raw.replace(/```json|```/g, "").trim();
       const parsed = JSON.parse(clean);
