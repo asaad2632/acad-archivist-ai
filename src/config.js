@@ -1,10 +1,14 @@
+// Default keys provided by the project owner. import.meta.env.VITE_* overrides them when set.
+const DEFAULT_GEMINI_KEY = "AQ.Ab8RN6II6Mk7lgY5Yj0zEUz5caQXmrK-LWRjJIvraOuXSAgZQ";
+const DEFAULT_GROQ_KEY   = "Gsk_nZQGBBtoEK3oi4LRK8L3WGdyb3FYtfpHMPoiro51xEid2Vmb05es";
+
 export const ANTHROPIC_API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
-export const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
-export const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || "";
+export const GEMINI_API_KEY    = import.meta.env.VITE_GEMINI_API_KEY    || DEFAULT_GEMINI_KEY;
+export const GROQ_API_KEY      = import.meta.env.VITE_GROQ_API_KEY      || DEFAULT_GROQ_KEY;
 
 export const AI_MODELS = [
-  { id: "gemini", label: "Gemini 1.5 Flash (Google)" },
-  { id: "groq",   label: "Llama 3 (Groq)" },
+  { id: "gemini",  label: "Gemini 1.5 Flash (Google)" },
+  { id: "groq",    label: "Llama 3 (Groq)" },
   { id: "lovable", label: "Lovable Cloud (AI Gateway)" },
 ];
 
