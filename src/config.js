@@ -1,5 +1,5 @@
 // Default keys provided by the project owner. import.meta.env.VITE_* overrides them when set.
-const DEFAULT_GEMINI_KEY = "AQ.Ab8RN6II6Mk7lgY5Yj0zEUz5caQXmrK-LWRjJIvraOuXSAgZQ";
+const DEFAULT_GEMINI_KEY = "AQ.Ab8RN6Il6Mk7lgY5Yj0zEUz5caQXmrK-LWRjJlvraOuXSAqgzZQ";
 const DEFAULT_GROQ_KEY   = "Gsk_nZQGBBtoEK3oi4LRK8L3WGdyb3FYtfpHMPoiro51xEid2Vmb05es";
 
 export const ANTHROPIC_API_KEY = import.meta.env.VITE_ANTHROPIC_API_KEY || "";
