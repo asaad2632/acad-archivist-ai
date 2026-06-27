@@ -152,7 +152,7 @@ function genRef(doc, fmt) {
   return `${a}. "${t}."${r} ${y}.`;
 }
 
-export default function AcadArchivFull() {
+export default function App() {
   const [page, setPage] = useState("home");
   const [docs, setDocs] = useState(DOCS_FROM_INDEX);
   const [searchFilters, setSearchFilters] = useState({ query:"", chapterId:"", priority:"", isNew:"", status:"" });
