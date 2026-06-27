@@ -311,7 +311,7 @@ export default function App() {
 
   // ===== الميزة 3: قائمة المصادر والمراجع النهائية =====
   const [bibliography, setBibliography] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_bibliography") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_bibliography"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
 
   const saveBibliography = (updated) => {
