@@ -156,6 +156,7 @@ function genRef(doc, fmt) {
 
 export default function App() {
   const [page, setPage] = useState("home");
+  const [aiModel, setAiModel] = useState(getSelectedModel());
   const [docs, setDocs] = useState(DOCS_FROM_INDEX);
   const [searchFilters, setSearchFilters] = useState({ query:"", chapterId:"", priority:"", isNew:"", status:"" });
   const [selectedDoc, setSelectedDoc] = useState(null);
