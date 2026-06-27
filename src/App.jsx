@@ -443,7 +443,7 @@ export default function App() {
 
   // ===== مكتبتي البحثية =====
   const [library, setLibrary] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_library") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_library"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
   const [libUploading, setLibUploading] = useState(false);
   const [libAnalyzing, setLibAnalyzing] = useState(null); // id المصدر الجاري تحليله
