@@ -2208,7 +2208,7 @@ ${docsContext}
         {page==="ai" && (
           <div>
             <h1 style={{fontSize:20,fontWeight:700,marginBottom:6}}>🤖 المساعد البحثي الذكي</h1>
-            <p style={{color:"#64748b",fontSize:13,marginBottom:16}}>اسأل أي سؤال بحثي حول أطروحتك ومصادرها — يعمل بـ Claude AI</p>
+            <p style={{color:"#64748b",fontSize:13,marginBottom:16}}>اسأل أي سؤال بحثي حول أطروحتك ومصادرها — يعمل بـ {AI_MODELS.find(m=>m.id===aiModel)?.label || aiModel} <span style={{display:"inline-block",width:8,height:8,borderRadius:"50%",background:"#10b981",marginInlineStart:6,verticalAlign:"middle"}} title="متصل"></span></p>
             <div style={{background:"white",borderRadius:12,padding:16,border:"0.5px solid #e2e8f0",marginBottom:14}}>
               <div style={{display:"flex",gap:10,marginBottom:10}}>
                 <input ref={aiInputRef} placeholder="مثال: ما هي أبرز وثائق RAF في البحرين؟ أو: حلّل وثائق الفصل الرابع المتعلقة بالنفط" style={{flex:1,padding:"9px 14px",borderRadius:8,border:"0.5px solid #cbd5e1",fontSize:13,fontFamily:"inherit"}} onKeyDown={e=>{if(e.key==="Enter"&&aiInputRef.current)handleAISearch(aiInputRef.current.value);}}/>
