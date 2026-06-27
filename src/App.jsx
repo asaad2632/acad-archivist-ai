@@ -1037,7 +1037,7 @@ ${docsContext || "لم يُعثر على مصادر مطابقة"}
   const [translatorLang, setTranslatorLang]           = useState("إنجليزية");
   const [translatorDocMeta, setTranslatorDocMeta]     = useState(null);
   const [savedTranslations, setSavedTranslations]     = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_translations") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_translations"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
   const [selectedTranslation, setSelectedTranslation] = useState(null);
   const translatorFileRef = useRef(null);
