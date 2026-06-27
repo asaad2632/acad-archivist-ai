@@ -2996,7 +2996,7 @@ ${docsContext}
             <div style={{marginBottom:20}}>
               <h1 style={{fontSize:20,fontWeight:700,marginBottom:4}}>🎓 محاكي مناقشة الأطروحة</h1>
               <p style={{color:"#64748b",fontSize:12}}>
-                يتقمّص الذكاء الاصطناعي دور رئيس لجنة مناقشة صارم — اختر الفصل لتبدأ جلسة تدريبية أكاديمية حقيقية
+                يتقمّص الذكاء الاصطناعي دور رئيس لجنة مناقشة صارم — اختر الفصل لتبدأ جلسة تدريبية أكاديمية حقيقية · يعمل بـ {AI_MODELS.find(m=>m.id===aiModel)?.label || aiModel} <span style={{display:"inline-block",width:7,height:7,borderRadius:"50%",background:"#10b981",marginInlineStart:4,verticalAlign:"middle"}}></span>
               </p>
             </div>
 
