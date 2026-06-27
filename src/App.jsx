@@ -1438,12 +1438,6 @@ ${docsContext}
 
   return (
     <div style={{fontFamily:"'Segoe UI',Tahoma,Geneva,Verdana,sans-serif",direction:"rtl",minHeight:"100vh",background:"#f1f5f9",color:"#1e293b"}}>
-      <div style={{position:"fixed",bottom:14,left:14,zIndex:9998,background:"#fff",border:"1px solid #e2e8f0",borderRadius:12,padding:"8px 12px",boxShadow:"0 4px 14px rgba(0,0,0,0.08)",display:"flex",alignItems:"center",gap:8,fontSize:12}}>
-        <span style={{color:"#64748b",fontWeight:600}}>🤖 النموذج:</span>
-        <select value={aiModel} onChange={e=>{ setAiModel(e.target.value); setSelectedModel(e.target.value); }} style={{border:"1px solid #cbd5e1",borderRadius:8,padding:"4px 8px",fontSize:12,background:"#fff",cursor:"pointer",fontFamily:"inherit"}}>
-          {AI_MODELS.map(m => <option key={m.id} value={m.id}>{m.label}</option>)}
-        </select>
-      </div>
       {notif && <div style={{position:"fixed",top:14,left:"50%",transform:"translateX(-50%)",zIndex:9999,background:notif.type==="error"?"#fee2e2":notif.type==="warn"?"#fef9c3":"#dcfce7",color:notif.type==="error"?"#dc2626":notif.type==="warn"?"#92400e":"#16a34a",padding:"10px 24px",borderRadius:12,fontWeight:500,fontSize:13,border:`1px solid ${notif.type==="error"?"#fca5a5":notif.type==="warn"?"#fde68a":"#86efac"}`,boxShadow:"0 4px 20px rgba(0,0,0,0.12)"}}>{notif.msg}</div>}
 
       {/* ===== MODAL: توليد الهامش الفوري ===== */}
