@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ANTHROPIC_API_KEY } from "./config";
+import { ANTHROPIC_API_KEY, AI_MODELS, getSelectedModel, setSelectedModel } from "./config";
+import { callLLM } from "./aiClient";
 
 // ============================================================
 // بيانات الفصول والمباحث — مستخرجة من خطة السمنار
