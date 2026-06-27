@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
+import { ANTHROPIC_API_KEY } from "./config";
 
 // ============================================================
 // بيانات الفصول والمباحث — مستخرجة من خطة السمنار
@@ -493,7 +494,7 @@ ${fileText.substring(0, 3000)}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model: "claude-sonnet-4-6",
           max_tokens: 1500,
@@ -562,7 +563,7 @@ ${fileText.substring(0, 3000)}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model: "claude-sonnet-4-6",
           max_tokens: 1500,
@@ -642,7 +643,7 @@ ${fileText.substring(0, 3000)}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model:"claude-sonnet-4-6",
           max_tokens:1000,
@@ -701,7 +702,7 @@ JSON المطلوب (أعده فقط بدون backticks):
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model:"claude-sonnet-4-6",
           max_tokens:1500,
@@ -762,7 +763,7 @@ JSON المطلوب (أعده فقط بدون backticks):
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model:"claude-sonnet-4-6",
           max_tokens:1000,
@@ -800,7 +801,7 @@ JSON المطلوب (أعده فقط بدون backticks):
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:"POST",
-        headers:{"Content-Type":"application/json"},
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model:"claude-sonnet-4-6",
           max_tokens:1200,
@@ -963,7 +964,7 @@ ${docsContext || "لم يُعثر على مصادر مطابقة"}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model: "claude-sonnet-4-6",
           max_tokens: 1500,
@@ -1103,7 +1104,7 @@ ${textToTranslate.substring(0, 4000)}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body: JSON.stringify({
           model: "claude-sonnet-4-6",
           max_tokens: 2000,
@@ -1287,7 +1288,7 @@ ${docsContext}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:  "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body:    JSON.stringify({
           model:      "claude-sonnet-4-6",
           max_tokens: 600,
@@ -1327,7 +1328,7 @@ ${docsContext}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:  "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body:    JSON.stringify({
           model:      "claude-sonnet-4-6",
           max_tokens: 500,
@@ -1406,7 +1407,7 @@ ${docsContext}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:  "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body:    JSON.stringify({
           model:      "claude-sonnet-4-6",
           max_tokens: 1500,
@@ -1457,7 +1458,7 @@ ${docsContext}
     try {
       const res = await fetch("https://api.anthropic.com/v1/messages", {
         method:  "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", "x-api-key": ANTHROPIC_API_KEY, "anthropic-version": "2023-06-01", "anthropic-dangerous-direct-browser-access": "true" },
         body:    JSON.stringify({
           model:      "claude-sonnet-4-6",
           max_tokens: 1500,
