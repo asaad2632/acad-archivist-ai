@@ -549,7 +549,7 @@ ${fileText.substring(0, 3000)}
         ? { ...newSrc, ...analysis, analyzed: true, status: "تم التحليل ✅" }
         : { ...newSrc, analyzed: false, status: "فشل التحليل ⚠️ — عدّل يدوياً" };
       saveLibrary(prev => {
-        const cur = JSON.parse(localStorage.getItem("acadarchiv_library") || "[]");
+        const _v = localStorage.getItem("acadarchiv_library"); const cur = _v && _v !== "undefined" ? JSON.parse(_v) : [];
         return cur.map(s => s.id === srcId ? analyzed : s);
       });
     }
