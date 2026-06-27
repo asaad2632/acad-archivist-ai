@@ -900,7 +900,7 @@ ${docsCtx}
   // ===================================================================
   const [cards, setCards] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("acadarchiv_cards") || "[]");
+      const v = localStorage.getItem("acadarchiv_cards"); return v && v !== "undefined" ? JSON.parse(v) : [];
     } catch { return []; }
   });
   const [cardView, setCardView]           = useState("grid");    // "grid" | "detail"
