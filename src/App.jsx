@@ -165,7 +165,7 @@ export default function App() {
   const [exportSelected, setExportSelected] = useState([]);
   const [exportText, setExportText] = useState("");
   const [customFormats, setCustomFormats] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_custom_formats") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_custom_formats"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
   const [showCustomBuilder, setShowCustomBuilder] = useState(false);
   const [editingCustomFmt, setEditingCustomFmt] = useState(null);
@@ -311,7 +311,7 @@ export default function App() {
 
   // ===== الميزة 3: قائمة المصادر والمراجع النهائية =====
   const [bibliography, setBibliography] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_bibliography") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_bibliography"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
 
   const saveBibliography = (updated) => {
@@ -443,7 +443,7 @@ export default function App() {
 
   // ===== مكتبتي البحثية =====
   const [library, setLibrary] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_library") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_library"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
   const [libUploading, setLibUploading] = useState(false);
   const [libAnalyzing, setLibAnalyzing] = useState(null); // id المصدر الجاري تحليله
@@ -549,7 +549,7 @@ ${fileText.substring(0, 3000)}
         ? { ...newSrc, ...analysis, analyzed: true, status: "تم التحليل ✅" }
         : { ...newSrc, analyzed: false, status: "فشل التحليل ⚠️ — عدّل يدوياً" };
       saveLibrary(prev => {
-        const cur = JSON.parse(localStorage.getItem("acadarchiv_library") || "[]");
+        const _v = localStorage.getItem("acadarchiv_library"); const cur = _v && _v !== "undefined" ? JSON.parse(_v) : [];
         return cur.map(s => s.id === srcId ? analyzed : s);
       });
     }
@@ -900,7 +900,7 @@ ${docsCtx}
   // ===================================================================
   const [cards, setCards] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem("acadarchiv_cards") || "[]");
+      const v = localStorage.getItem("acadarchiv_cards"); return v && v !== "undefined" ? JSON.parse(v) : [];
     } catch { return []; }
   });
   const [cardView, setCardView]           = useState("grid");    // "grid" | "detail"
@@ -1037,7 +1037,7 @@ ${docsContext || "لم يُعثر على مصادر مطابقة"}
   const [translatorLang, setTranslatorLang]           = useState("إنجليزية");
   const [translatorDocMeta, setTranslatorDocMeta]     = useState(null);
   const [savedTranslations, setSavedTranslations]     = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_translations") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_translations"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
   const [selectedTranslation, setSelectedTranslation] = useState(null);
   const translatorFileRef = useRef(null);
