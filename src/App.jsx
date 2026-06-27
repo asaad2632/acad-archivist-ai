@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ANTHROPIC_API_KEY, AI_MODELS, getSelectedModel, setSelectedModel } from "./config";
+import { AI_MODELS, getSelectedModel, setSelectedModel } from "./config";
 import { callLLM } from "./aiClient";
 
 // ============================================================
