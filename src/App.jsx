@@ -165,7 +165,7 @@ export default function App() {
   const [exportSelected, setExportSelected] = useState([]);
   const [exportText, setExportText] = useState("");
   const [customFormats, setCustomFormats] = useState(() => {
-    try { return JSON.parse(localStorage.getItem("acadarchiv_custom_formats") || "[]"); } catch { return []; }
+    try { const v = localStorage.getItem("acadarchiv_custom_formats"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
   });
   const [showCustomBuilder, setShowCustomBuilder] = useState(false);
   const [editingCustomFmt, setEditingCustomFmt] = useState(null);
