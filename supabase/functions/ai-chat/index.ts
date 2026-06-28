@@ -51,7 +51,7 @@ async function callOpenRouter({ messages, system, max_tokens }: any) {
       'X-Title': 'AcadArchiv',
     },
     body: JSON.stringify({
-      model: 'meta-llama/llama-4-maverick:free',
+      model: 'meta-llama/llama-3.3-70b-instruct:free',
       messages: toOpenAIMessages(messages, system),
       max_tokens,
     }),
