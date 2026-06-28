@@ -3,15 +3,17 @@ import { corsHeaders } from 'npm:@supabase/supabase-js@2/cors';
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   try {
-    const { messages = [], system, max_tokens = 1024, provider = 'lovable' } = await req.json();
+    const { messages = [], system, max_tokens = 1500, provider = 'openrouter' } = await req.json();
 
     let text = '';
     if (provider === 'gemini') {
       text = await callGemini({ messages, system, max_tokens });
     } else if (provider === 'groq') {
       text = await callGroq({ messages, system, max_tokens });
-    } else {
+    } else if (provider === 'lovable') {
       text = await callLovable({ messages, system, max_tokens });
+    } else {
+      text = await callOpenRouter({ messages, system, max_tokens });
     }
 
     return new Response(JSON.stringify({ content: [{ type: 'text', text }] }), {
@@ -25,9 +27,7 @@ Deno.serve(async (req) => {
   }
 });
 
-async function callLovable({ messages, system, max_tokens }: any) {
-  const key = Deno.env.get('LOVABLE_API_KEY');
-  if (!key) throw new Error('Missing LOVABLE_API_KEY');
+function toOpenAIMessages(messages: any[], system?: string) {
   const msgs: any[] = [];
   if (system) msgs.push({ role: 'system', content: system });
   for (const m of messages) {
@@ -36,10 +36,38 @@ async function callLovable({ messages, system, max_tokens }: any) {
       content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content),
     });
   }
+  return msgs;
+}
+
+async function callOpenRouter({ messages, system, max_tokens }: any) {
+  const key = Deno.env.get('OPENROUTER_API_KEY');
+  if (!key) throw new Error('Missing OPENROUTER_API_KEY');
+  const resp = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`,
+      'HTTP-Referer': 'https://acadarchiv.lovable.app',
+      'X-Title': 'AcadArchiv',
+    },
+    body: JSON.stringify({
+      model: 'meta-llama/llama-3.3-70b-instruct:free',
+      messages: toOpenAIMessages(messages, system),
+      max_tokens,
+    }),
+  });
+  if (!resp.ok) throw new Error(`OpenRouter ${resp.status}: ${await resp.text()}`);
+  const data = await resp.json();
+  return data?.choices?.[0]?.message?.content || '';
+}
+
+async function callLovable({ messages, system, max_tokens }: any) {
+  const key = Deno.env.get('LOVABLE_API_KEY');
+  if (!key) throw new Error('Missing LOVABLE_API_KEY');
   const resp = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Lovable-API-Key': key },
-    body: JSON.stringify({ model: 'google/gemini-3-flash-preview', messages: msgs, max_tokens }),
+    body: JSON.stringify({ model: 'google/gemini-3-flash-preview', messages: toOpenAIMessages(messages, system), max_tokens }),
   });
   if (!resp.ok) throw new Error(`Lovable ${resp.status}: ${await resp.text()}`);
   const data = await resp.json();
@@ -69,20 +97,12 @@ async function callGemini({ messages, system, max_tokens }: any) {
 async function callGroq({ messages, system, max_tokens }: any) {
   const key = Deno.env.get('GROQ_API_KEY');
   if (!key) throw new Error('Missing GROQ_API_KEY');
-  const msgs: any[] = [];
-  if (system) msgs.push({ role: 'system', content: system });
-  for (const m of messages) {
-    msgs.push({
-      role: m.role === 'assistant' ? 'assistant' : 'user',
-      content: typeof m.content === 'string' ? m.content : JSON.stringify(m.content),
-    });
-  }
   const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${key}` },
     body: JSON.stringify({
       model: 'llama-3.3-70b-versatile',
-      messages: msgs,
+      messages: toOpenAIMessages(messages, system),
       max_tokens,
       temperature: 0.7,
     }),

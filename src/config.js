@@ -7,9 +7,10 @@ export const GEMINI_API_KEY    = import.meta.env.VITE_GEMINI_API_KEY    || DEFAU
 export const GROQ_API_KEY      = import.meta.env.VITE_GROQ_API_KEY      || DEFAULT_GROQ_KEY;
 
 export const AI_MODELS = [
-  { id: "gemini",  label: "Gemini 1.5 Flash (Google)" },
-  { id: "groq",    label: "Llama 3 (Groq)" },
-  { id: "lovable", label: "Lovable Cloud (AI Gateway)" },
+  { id: "openrouter", label: "Llama 4 Maverick (OpenRouter)" },
+  { id: "lovable",    label: "Lovable Cloud (AI Gateway)" },
+  { id: "gemini",     label: "Gemini 1.5 Flash (Google)" },
+  { id: "groq",       label: "Llama 3 (Groq)" },
 ];
 
 export const MODEL_STORAGE_KEY = "acadarchiv_ai_model";
@@ -18,7 +19,7 @@ export function getSelectedModel() {
     const v = localStorage.getItem(MODEL_STORAGE_KEY);
     if (v && AI_MODELS.some(m => m.id === v)) return v;
   } catch {}
-  return "gemini";
+  return "openrouter";
 }
 export function setSelectedModel(id) {
   try { localStorage.setItem(MODEL_STORAGE_KEY, id); } catch {}
