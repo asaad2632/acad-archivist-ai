@@ -506,7 +506,7 @@ const updateInLibrary = async (id, changes) => {
   } catch (e) { console.error('updateInLibrary error:', e); }
 };
 
-  };
+
 
   const analyzeSource = async (src, fileText) => {
     setLibAnalyzing(src.id);
