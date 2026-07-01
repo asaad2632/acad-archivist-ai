@@ -443,18 +443,68 @@ export default function App() {
     showNotif("🗑️ تم حذف المرجع من القائمة");
   };
 
-  // ===== مكتبتي البحثية =====
- const [library, setLibrary] = useState([]);
-  const [libUploading, setLibUploading] = useState(false);
-  const [libAnalyzing, setLibAnalyzing] = useState(null); // id المصدر الجاري تحليله
-  const [libFilter, setLibFilter] = useState({ query:"", chapterId:"", category:"", priority:"" });
-  const [libSelected, setLibSelected] = useState(null);
-  const [libUrlInput, setLibUrlInput] = useState("");
-  const [libUrlLoading, setLibUrlLoading] = useState(false);
-  const libFileRef = useRef(null);
+  // ===== مكتبتي البحثية =====// ===== مكتبتي البحثية =====
+const [library, setLibrary] = useState([]);
+const [libUploading, setLibUploading] = useState(false);
+const [libAnalyzing, setLibAnalyzing] = useState(null);
+const [libFilter, setLibFilter] = useState({ query:"", chapterId:"", category:"", priority:"" });
+const [libSelected, setLibSelected] = useState(null);
+const [libUrlInput, setLibUrlInput] = useState("");
+const [libUrlLoading, setLibUrlLoading] = useState(false);
+const libFileRef = useRef(null);
 
-  const saveLibrary = (updated) => {
-    setLibrary(updated);
+// تحميل المكتبة من Supabase عند بدء التشغيل
+useEffect(() => {
+  const loadLibrary = async () => {
+    try {
+      const { supabase } = await import('./integrations/supabase/client');
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+      const { data, error } = await supabase
+        .from('library_sources')
+        .select('*')
+        .order('created_at', { ascending: false });
+      if (!error && data) setLibrary(data);
+    } catch (e) { console.error('loadLibrary error:', e); }
+  };
+  loadLibrary();
+}, []);
+
+const saveLibrary = async (updated) => {
+  setLibrary(updated);
+};
+
+const addToLibrary = async (newSource) => {
+  try {
+    const { supabase } = await import('./integrations/supabase/client');
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) return;
+    const { data, error } = await supabase
+      .from('library_sources')
+      .insert([{ ...newSource, user_id: user.id }])
+      .select()
+      .single();
+    if (!error && data) {
+      setLibrary(prev => [data, ...prev]);
+    }
+  } catch (e) { console.error('addToLibrary error:', e); }
+};
+
+const deleteFromLibrary = async (id) => {
+  try {
+    const { supabase } = await import('./integrations/supabase/client');
+    await supabase.from('library_sources').delete().eq('id', id);
+    setLibrary(prev => prev.filter(s => s.id !== id));
+  } catch (e) { console.error('deleteFromLibrary error:', e); }
+};
+
+const updateInLibrary = async (id, changes) => {
+  try {
+    const { supabase } = await import('./integrations/supabase/client');
+    await supabase.from('library_sources').update(changes).eq('id', id);
+    setLibrary(prev => prev.map(s => s.id === id ? { ...s, ...changes } : s));
+  } catch (e) { console.error('updateInLibrary error:', e); }
+};
 
   };
 
