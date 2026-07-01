@@ -444,9 +444,7 @@ export default function App() {
   };
 
   // ===== مكتبتي البحثية =====
-  const [library, setLibrary] = useState(() => {
-    try { const v = localStorage.getItem("acadarchiv_library"); return v && v !== "undefined" ? JSON.parse(v) : []; } catch { return []; }
-  });
+ const [library, setLibrary] = useState([]);
   const [libUploading, setLibUploading] = useState(false);
   const [libAnalyzing, setLibAnalyzing] = useState(null); // id المصدر الجاري تحليله
   const [libFilter, setLibFilter] = useState({ query:"", chapterId:"", category:"", priority:"" });
@@ -457,7 +455,7 @@ export default function App() {
 
   const saveLibrary = (updated) => {
     setLibrary(updated);
-    try { localStorage.setItem("acadarchiv_library", JSON.stringify(updated)); } catch {}
+
   };
 
   const analyzeSource = async (src, fileText) => {
